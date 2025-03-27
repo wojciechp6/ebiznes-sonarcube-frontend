@@ -3,13 +3,21 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# An example controller showing a sample home page
-GET     /                           controllers.HomeController.index()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
-GET     /products           controllers.ProductController.getAll
-GET     /products/:id       controllers.ProductController.getById(id: Int)
+GET     /products              @controllers.ProductsController.listProducts
+GET     /products/:id          @controllers.ProductsController.getProduct(id:Int)
+POST    /products              @controllers.ProductsController.addProduct
+PUT     /products/:id          @controllers.ProductsController.updateProduct(id:Int)
+DELETE  /products/:id          @controllers.ProductsController.deleteProduct(id:Int)
 
-DELETE  /products/:id       controllers.ProductController.delete(id: Int)
+GET     /categories              @controllers.CategoriesController.listCategories
+GET     /categories/:id          @controllers.CategoriesController.getCategory(id:Int)
+POST    /categories              @controllers.CategoriesController.addCategory
+PUT     /categories/:id          @controllers.CategoriesController.updateCategory(id:Int)
+DELETE  /categories/:id          @controllers.CategoriesController.deleteCategory(id:Int)
 
+GET     /cart                    @controllers.CartController.listCartItems
+POST    /cart                    @controllers.CartController.addCartItem
+PUT     /cart/:productId         @controllers.CartController.updateCartItem(productId:Int)
+DELETE  /cart/:productId         @controllers.CartController.deleteCartItem(productId:Int)

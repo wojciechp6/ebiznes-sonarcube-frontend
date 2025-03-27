@@ -26,8 +26,9 @@ ENV PATH=$PATH:/root/.sdkman/candidates/scala/3.3.5/bin
 WORKDIR /app
 COPY /ebiznes-scala /app
 
-RUN sbt clean compile dist
-RUN unzip target/universal/*.zip -d /app
+RUN sbt compile
 
-#CMD ["app/bin/ebiznes-scala"]
+EXPOSE 9000
+
+CMD ["sbt", "run"]
 
