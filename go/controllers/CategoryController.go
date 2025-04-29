@@ -17,12 +17,10 @@ func (h *CategoryHandler) CreateCategory(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	// Tworzymy nową kategorię
 	if err := h.DB.Create(&category).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	// Pobieramy kategorię z powiązanymi produktami (jeśli istnieją)
 	if err := h.DB.Preload("Products").First(&category, category.ID).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
@@ -32,7 +30,6 @@ func (h *CategoryHandler) CreateCategory(c echo.Context) error {
 
 func (h *CategoryHandler) GetCategories(c echo.Context) error {
 	var categories []models.Category
-	// Ładujemy kategorie wraz z powiązanymi produktami
 	if err := h.DB.Preload("Products").Find(&categories).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
@@ -42,7 +39,6 @@ func (h *CategoryHandler) GetCategories(c echo.Context) error {
 func (h *CategoryHandler) GetCategory(c echo.Context) error {
 	id := c.Param("id")
 	var category models.Category
-	// Ładujemy kategorię wraz z powiązanymi produktami
 	if err := h.DB.Preload("Products").First(&category, id).Error; err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "Kategoria o podanym ID nie została znaleziona"})
 	}
@@ -53,12 +49,10 @@ func (h *CategoryHandler) UpdateCategory(c echo.Context) error {
 	id := c.Param("id")
 	var category models.Category
 
-	// Pobieramy istniejącą kategorię
 	if err := h.DB.First(&category, id).Error; err != nil {
 		return c.JSON(http.StatusNotFound, map[string]string{"error": "Kategoria o podanym ID nie została znaleziona"})
 	}
 
-	// Aktualizujemy dane
 	if err := c.Bind(&category); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
@@ -68,7 +62,6 @@ func (h *CategoryHandler) UpdateCategory(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	// Pobieramy zaktualizowaną kategorię wraz z powiązanymi produktami
 	if err := h.DB.Preload("Products").First(&category, category.ID).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
