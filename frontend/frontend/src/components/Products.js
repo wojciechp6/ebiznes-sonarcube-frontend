@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../axiosConfig";
-import { CartContext } from "../context/CartContext";
 
-function ProductsPage() {
+function ProductsPage({ cartId = 1 }) {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { refreshCart } = useContext(CartContext);
+    const [adding, setAdding] = useState(null); // productId, jeśli właśnie dodajemy
 
     useEffect(() => {
         api.get("/products")
@@ -14,13 +13,17 @@ function ProductsPage() {
     }, []);
 
     const handleAddToCart = async (productId) => {
+        setAdding(productId);
         try {
-            await api.post("/carts/current/items", { productId });
-            refreshCart();
-            alert("Dodano do koszyka!");
-        } catch (err) {
-            alert("Błąd dodawania do koszyka.");
+            await api.post(`/carts/${cartId}/items`, {
+                productId,
+                quantity: 1
+            });
+
+        } catch (e) {
+            alert("Błąd przy dodawaniu do koszyka");
         }
+        setAdding(null);
     };
 
     if (loading) return <div>Loading...</div>;
@@ -30,10 +33,13 @@ function ProductsPage() {
             <h1>Produkty</h1>
             <ul>
                 {products.map(prod => (
-                    <li key={prod.id}>
-                        <b>{prod.name}</b> — {prod.price} PLN&nbsp;
-                        <button onClick={() => handleAddToCart(prod.id)}>
-                            Dodaj do koszyka
+                    <li key={prod.ID}>
+                        <b>{prod.name}</b> — {prod.price} PLN{" "}
+                        <button
+                            onClick={() => handleAddToCart(prod.ID)}
+                            disabled={adding === prod.ID}
+                        >
+                            {adding === prod.ID ? "Dodaję..." : "Dodaj do koszyka"}
                         </button>
                     </li>
                 ))}

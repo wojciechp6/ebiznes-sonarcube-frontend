@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../axiosConfig";
 
-function PaymentsPage() {
+function PaymentsPage({ cartId = 1 }) {
     const [amount, setAmount] = useState("");
     const [status, setStatus] = useState(null);
 
@@ -9,8 +9,8 @@ function PaymentsPage() {
         e.preventDefault();
         setStatus(null);
         try {
-            const res = await api.post("/payments", { amount: parseFloat(amount) });
-            setStatus(res.data.status || "success");
+            await api.post("/payments", { cart_id: cartId, amount: parseFloat(amount) });
+            setStatus("success");
         } catch (err) {
             setStatus("error");
         }

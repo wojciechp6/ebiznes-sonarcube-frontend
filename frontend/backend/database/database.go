@@ -30,5 +30,6 @@ func Migrate(db *gorm.DB) {
 		&models.Category{},
 		&models.Cart{},
 		&models.Payment{},
+		&models.CartItem{},
 	)
 }

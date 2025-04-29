@@ -1,41 +1,59 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../axiosConfig";
-import { CartContext } from "../context/CartContext";
 
-function CartPage() {
-    const { cart, loading, refreshCart } = useContext(CartContext);
+function CartsPage() {
+    const [carts, setCarts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [creating, setCreating] = useState(false);
+    const [error, setError] = useState(null);
 
-    const handleRemoveFromCart = async (itemId) => {
+    // Pobieranie koszyków
+    const fetchCarts = () => {
+        setLoading(true);
+        api.get("/carts")
+            .then(res => setCarts(res.data))
+            .catch(() => setCarts([]))
+            .finally(() => setLoading(false));
+    };
+
+    useEffect(() => {
+        fetchCarts();
+    }, []);
+
+    // Dodawanie nowego koszyka
+    const handleCreateCart = async (e) => {
+        e.preventDefault();
+        setCreating(true);
+        setError(null);
         try {
-            await api.delete(`/carts/current/items/${itemId}`); // lub inny endpoint zgodny z backendem
-            refreshCart();
+            await api.post("/carts", {}); // Jeśli potrzebujesz dodatkowych pól, dodaj je tutaj
+            fetchCarts();
         } catch (err) {
-            alert("Błąd usuwania z koszyka.");
+            setError("Nie udało się utworzyć koszyka.");
         }
+        setCreating(false);
     };
 
     if (loading) return <div>Loading...</div>;
-    if (!cart) return <div>Koszyk jest pusty.</div>;
 
     return (
         <main>
-            <h1>Koszyk</h1>
+            <h1>Koszyki</h1>
             <ul>
-                {cart.items && cart.items.length > 0 ? (
-                    cart.items.map(item => (
-                        <li key={item.id}>
-                            {item.name} — {item.price} PLN&nbsp;
-                            <button onClick={() => handleRemoveFromCart(item.id)}>
-                                Usuń
-                            </button>
-                        </li>
-                    ))
-                ) : (
-                    <li>Koszyk jest pusty.</li>
-                )}
+                {carts.map(cart => (
+                    <li key={cart.ID}>
+                        Koszyk #{cart.ID} — {cart.items?.length ?? 0} produktów
+                    </li>
+                ))}
             </ul>
+            <form onSubmit={handleCreateCart}>
+                <button type="submit" disabled={creating}>
+                    {creating ? "Tworzenie..." : "Dodaj nowy koszyk"}
+                </button>
+                {error && <div style={{color: "red"}}>{error}</div>}
+            </form>
         </main>
     );
 }
 
-export default CartPage;
+export default CartsPage;

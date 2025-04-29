@@ -58,7 +58,7 @@ func AddToCart(db *gorm.DB) gin.HandlerFunc {
 
         // Check if cart exists
         var cart models.Cart
-        if err := db.Preload("CartItems").First(&cart, cartID).Error; err != nil {
+        if err := db.Preload("Items").First(&cart, cartID).Error; err != nil {
             c.JSON(http.StatusNotFound, gin.H{"error": "Cart not found"})
             return
         }
