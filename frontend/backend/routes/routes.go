@@ -15,6 +15,8 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 		api.POST("/categories", controllers.CreateCategory(db))
 		api.GET("/carts", controllers.GetCarts(db))
 		api.POST("/carts", controllers.CreateCart(db))
+        api.POST("/carts/:cartId/items", controllers.AddToCart(db))
+        api.DELETE("/carts/:cartId/items/:itemId", controllers.RemoveFromCart(db))
 		api.POST("/payments", controllers.MakePayment(db))
 	}
 }
