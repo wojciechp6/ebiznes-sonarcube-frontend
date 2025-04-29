@@ -1,13 +1,26 @@
-version: "3.8"
+version: '3.8'
+
 services:
-  frontend:
-    build: .
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
   backend:
-    # Dla przykładu, backend może być budowany osobno lub korzystać z gotowego obrazu
-    image: frontend-ebiznes:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - ./backend/data:/app/data # Miejsce na plik SQLite
+    environment:
+      - GIN_MODE=release
+      - DB_FILE=/app/data/app.db # Ścieżka do pliku SQLite
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080/api
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
