@@ -1,0 +1,50 @@
+# Binaries and databases
+*.db
+*.sqlite
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Node
+node_modules/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gradle
+.gradle/
+build/
+!kotlin/ebiznes-kotlin/build.gradle.kts
+
+# VSCode
+.vscode/
+
+# Environment
+.env
+.env.*
+
+# Others
+dist/
+coverage/
+
+# Docker
+*.pid
+
+# Scala
+*.class
+target/
+
+# Kotlin
+*.iml
+.idea/
+
+# Misc
+*.swp
+*.swo
