@@ -23,3 +23,35 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
+
+# Node modules and build output
+node_modules/
+build/
+
+# Dependency directories
+__pycache__/
+venv/
+
+# Python cache and test output
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+
+# Environment files
+.env
+.env.*
+
+# OS files
+Thumbs.db
+
+# Logs
+
+# SQLite DB
+backend/data/*.db
+
+# Docker
+*.pid
+
+# VSCode
+.vscode/
