@@ -1,0 +1,40 @@
+# Go build
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go modules
+vendor/
+
+# Database
+my_database.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VSCode
+.vscode/
+
+# Test/coverage
+coverage.out
+
+# Env
+.env
+.venv
+
+# Selenium/ChromeDriver logs
+chromedriver.log
+
+# System
+.DS_Store
+Thumbs.db
+
+.idea
