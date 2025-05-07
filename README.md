@@ -76,3 +76,37 @@ kliencką na dockerze via docker-compose
 [commit](https://github.com/wojciechp6/ebiznes/commit/5e585b1478bab46d5f856d3a4c5f28733d8baf52)
 
 Folder: frontend
+
+**Zadanie 6** Testy
+
+:white_check_mark: 3.0 Należy stworzyć 20 przypadków testowych w CypressJS lub Selenium
+(Kotlin, Python, Java, JS, Go, Scala)
+
+:white_check_mark: 3.5 Należy rozszerzyć testy funkcjonalne, aby zawierały minimum 50
+asercji
+
+:white_check_mark: 4.0 Należy stworzyć testy jednostkowe do wybranego wcześniejszego
+projektu z minimum 50 asercjami
+
+:white_check_mark: 4.5 Należy dodać testy API, należy pokryć wszystkie endpointy z
+minimum jednym scenariuszem negatywnym per endpoint
+
+:x: 5.0 Należy uruchomić testy funkcjonalne na Browserstacku
+
+
+**Zadanie 8** OAuth2
+
+:white_check_mark: 3.0 logowanie przez aplikację serwerową (bez Oauth2)
+
+:white_check_mark: 3.5 rejestracja przez aplikację serwerową (bez Oauth2)
+
+:white_check_mark: 4.0 logowanie via Google OAuth2
+
+:white_check_mark: 4.5 logowanie via Facebook lub Github OAuth2
+
+:white_check_mark: 5.0 zapisywanie danych logowania OAuth2 po stronie serwera
+
+[commit](https://github.com/wojciechp6/ebiznes/commit/8ae0b960cfb82fc4dd3cc6922dadec80e1fa5720)
+
+Folder: oauth2
+
