@@ -13,6 +13,10 @@ function PaymentsPage({ cartId = 1 }) {
             setStatus("success");
         } catch (err) {
             setStatus("error");
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.error('Payment error:', err);
+            }
         }
     };
 

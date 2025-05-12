@@ -29,7 +29,12 @@ function CartsPage() {
             await api.post("/carts", {}); // Jeśli potrzebujesz dodatkowych pól, dodaj je tutaj
             fetchCarts();
         } catch (err) {
-            setError("Nie udało się utworzyć koszyka.");
+            setError("Nie udało się utworzyć koszyka. Szczegóły: " + (err?.message || err));
+            // Optionally log the error for debugging
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.error('Create cart error:', err);
+            }
         }
         setCreating(false);
     };

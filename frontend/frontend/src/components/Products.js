@@ -21,7 +21,11 @@ function ProductsPage({ cartId = 1 }) {
             });
 
         } catch (e) {
-            alert("Błąd przy dodawaniu do koszyka");
+            alert("Błąd przy dodawaniu do koszyka. Szczegóły: " + (e?.message || e));
+            if (process.env.NODE_ENV !== 'production') {
+                // eslint-disable-next-line no-console
+                console.error('Add to cart error:', e);
+            }
         }
         setAdding(null);
     };

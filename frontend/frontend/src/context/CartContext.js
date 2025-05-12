@@ -11,7 +11,13 @@ export function CartProvider({ children }) {
         setLoading(true);
         api.get("/carts/current")
             .then(res => setCart(res.data))
-            .catch(() => setCart(null))
+            .catch((err) => {
+                setCart(null);
+                if (process.env.NODE_ENV !== 'production') {
+                    // eslint-disable-next-line no-console
+                    console.error('Fetch cart error:', err);
+                }
+            })
             .finally(() => setLoading(false));
     }, []);
 
