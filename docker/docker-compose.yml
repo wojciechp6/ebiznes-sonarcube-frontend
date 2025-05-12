@@ -1,4 +1,0 @@
-version: "1.0"
-services:
-  zadanie1:
-    image: wojciechp6/ebiznes-docker:latest
