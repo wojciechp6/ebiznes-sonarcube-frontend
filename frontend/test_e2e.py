@@ -114,15 +114,17 @@ def test_create_new_cart():
     assert len(items_after) == len(items_before) + 1
     driver.quit()
 
-# 11. Usunięcie produktu z koszyka (jeśli istnieje)
-# Pomijamy, bo nie ma UI do usuwania w Cart.js
-
-# 12. Kategorie wyświetlają się poprawnie
-def test_categories_not_empty():
+# 12. Sprawdzenie czy na stronie produktów wyświetla się cena przynajmniej jednego produktu
+def test_product_has_price():
     driver = get_driver()
-    driver.get(BASE_URL + "/categories")
+    driver.get(BASE_URL + "/products")
     items = driver.find_elements(By.TAG_NAME, "li")
-    assert len(items) >= 0
+    found = False
+    for item in items:
+        if "PLN" in item.text:
+            found = True
+            break
+    assert found, "Żaden produkt nie ma ceny!"
     driver.quit()
 
 # 13. Przejście między zakładkami nie powoduje błędów
